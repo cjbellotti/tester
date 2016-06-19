@@ -1,20 +1,26 @@
 package com.tester.components;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.Properties;
 
 import com.tester.base.IContext;
 
 public class HttpRequestComponent extends BaseComponent {
 
 	private URL url;
+	private Properties header;
 	
 	public HttpRequestComponent(IContext ctx) {
 		super(ctx);
+		this.header = new Properties();
 	}
 
 	@Override
@@ -25,8 +31,32 @@ public class HttpRequestComponent extends BaseComponent {
 		HttpURLConnection connection;
 		try {
 			
+			String method = this.getProperties().getProperty("METHOD");
 			connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
+			connection.setRequestMethod(method);
+			
+			Iterator<Object> it = this.header.keySet().iterator();
+			
+			while(it.hasNext()) {
+			
+				String name = (String) it.next();
+				connection.setRequestProperty(name, this.header.getProperty(name));
+			}
+			
+			if (method.equals("POST") || method.equals("PUT")) {
+			
+				connection.setDoOutput(true);
+				String body = this.getCtx().processData(this.getProperties().getProperty("BODY"));
+				
+				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
+				
+				bw.write(body);
+				
+				bw.flush();
+				
+				bw.close();
+				
+			}
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			
@@ -48,10 +78,23 @@ public class HttpRequestComponent extends BaseComponent {
 	public void init() {
 
 		String url = this.getCtx().processData(this.getProperties().getProperty("URL"));
+		System.out.println(url);
 		try {
 			this.url = new URL(url);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
+		}
+		
+		Iterator<Object> it = this.getProperties().keySet().iterator();
+		
+		while(it.hasNext()) {
+			
+			String name = (String) it.next();
+			
+			if (name.length() > 8) 
+				if (name.substring(0, 7).equals("__HEADER"))
+					this.header.put(name.substring(8), this.getProperties().get(name));
+			
 		}
 		
 	}
