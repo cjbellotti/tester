@@ -68,5 +68,12 @@ public abstract class BaseComponent implements IComponent {
 	}
 	
 	public abstract void init();
+
+	@Override
+	public List<IComponent> getComponents() {
+		return this.components;
+	}
+	
+
 	
 }

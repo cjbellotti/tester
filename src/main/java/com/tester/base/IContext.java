@@ -6,5 +6,6 @@ public interface IContext {
 	public String getVariable(String name);
 	public void process();
 	public String processData(String data);
+	public IComponent getComponents();
 	
 }

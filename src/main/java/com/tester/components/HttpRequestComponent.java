@@ -78,7 +78,6 @@ public class HttpRequestComponent extends BaseComponent {
 	public void init() {
 
 		String url = this.getCtx().processData(this.getProperties().getProperty("URL"));
-		System.out.println(url);
 		try {
 			this.url = new URL(url);
 		} catch (MalformedURLException e) {
