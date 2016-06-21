@@ -12,6 +12,7 @@ import java.util.Iterator;
 import java.util.Properties;
 
 import com.tester.base.IContext;
+import com.tester.exception.ComponentException;
 
 public class HttpRequestComponent extends BaseComponent {
 
@@ -24,7 +25,7 @@ public class HttpRequestComponent extends BaseComponent {
 	}
 
 	@Override
-	public String task(String data) {
+	public String task(String data) throws ComponentException {
 
 		String response = "";
 		
@@ -67,8 +68,7 @@ public class HttpRequestComponent extends BaseComponent {
 			br.close();
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ComponentException("ERROR in request : " + e.getMessage());
 		}
 
 		return response;
@@ -90,9 +90,9 @@ public class HttpRequestComponent extends BaseComponent {
 			
 			String name = (String) it.next();
 			
-			if (name.length() > 8) 
-				if (name.substring(0, 7).equals("__HEADER"))
-					this.header.put(name.substring(8), this.getProperties().get(name));
+			if (name.length() > 9) 
+				if (name.substring(0, 9).equals("__HEADER_"))
+					this.header.put(name.substring(9), this.getProperties().get(name));
 			
 		}
 		

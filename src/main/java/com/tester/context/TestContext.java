@@ -20,6 +20,7 @@ import javax.xml.bind.Unmarshaller;
 import com.tester.base.IComponent;
 import com.tester.base.IContext;
 import com.tester.components.ContainerComponent;
+import com.tester.exception.ComponentException;
 import com.tester.xml.Component;
 import com.tester.xml.Project;
 import com.tester.xml.Property;
@@ -68,6 +69,18 @@ public class TestContext implements IContext {
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			Project project = (Project) jaxbUnmarshaller.unmarshal(file);
 
+			if (project.getProperties() != null) {
+				Iterator<Property> itProp = project.getProperties().iterator();
+
+				while (itProp.hasNext()) {
+
+					Property prop = itProp.next();
+					this.variables.put(prop.getName(), prop.getValue());
+
+				}
+
+			}
+			
 			Iterator<Component> it = project.getComponents().iterator();
 
 			while (it.hasNext()) {
@@ -139,7 +152,7 @@ public class TestContext implements IContext {
 	}
 
 	@Override
-	public void process() {
+	public void process() throws ComponentException {
 
 		this.components.process(null);
 
@@ -166,7 +179,7 @@ public class TestContext implements IContext {
 
 		List<String> result = new ArrayList<String>();
 
-		Pattern pattern = Pattern.compile("\\$\\{([a-zA-Z0-9]+)\\}");
+		Pattern pattern = Pattern.compile("\\$\\{([_a-zA-Z0-9]+)\\}");
 
 		Matcher match = pattern.matcher(input);
 

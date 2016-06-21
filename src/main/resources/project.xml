@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <project>
 	<name>Test</name>
+	<properties>
+		<property name="NOMBRE_TEST" value="Pedro" />
+	</properties>
 	<components>
 		<component>
 			<type>HttpRequest</type>
 			<description>Test clientes Rest Get</description>
 			<properties>
-				<property name="URL" value="http://localhost:3000/clientes"/>
-				<property name="METHOD" value="GET"/>
+				<property name="URL" value="http://localhost:8888/clientes" />
+				<property name="METHOD" value="POST" />
+				<property name="__HEADER_Content-Type" value="application/json" />
+				<property name="BODY"
+					value="{ &quot;id&quot; : 1, &quot;nombre&quot; : &quot;Pedro&quot;, &quot;apellido&quot; : &quot;Lopez&quot; }" />
 			</properties>
 			<components>
 				<component>
@@ -18,13 +24,151 @@
 					<components>
 					</components>
 				</component>
+				<component>
+					<type>HttpRequest</type>
+					<description>Get Cliente</description>
+					<properties>
+						<property name="URL" value="http://localhost:8888/clientes/1" />
+						<property name="METHOD" value="GET" />
+					</properties>
+					<components>
+						<component>
+							<type>JSONSelector</type>
+							<description>Select apellido</description>
+							<properties>
+								<property name="PATH" value="apellido" />
+							</properties>
+							<components>
+								<component>
+									<type>Logger</type>
+									<description>Show apellido</description>
+									<properties>
+									</properties>
+									<components>
+									</components>
+								</component>
+							</components>
+						</component>
+						<component>
+							<type>JSONSelector</type>
+							<description>Select nombre</description>
+							<properties>
+								<property name="PATH" value="nombre" />
+							</properties>
+							<components>
+								<component>
+									<type>ExpressionAssert</type>
+									<description>Eval if nombre = 'Pedro'</description>
+									<properties>
+										<property name="EXPRESSION" value="input == '${NOMBRE_TEST}'" />
+									</properties>
+									<components>
+										<component>
+											<type>Logger</type>
+											<description>Show Result</description>
+											<properties>
+											</properties>
+											<components>
+											</components>
+										</component>
+									</components>
+								</component>
+							</components>
+						</component>
+					</components>
+				</component>
 			</components>
 		</component>
 		<component>
-			<type>Logger</type>
-			<decription>Test second component</decription>
-			<properties></properties>
-			<components></components>
+			<type>ScriptComponent</type>
+			<description>Set CONTADOR to 0</description>
+			<properties>
+				<property name="EXPRESSION" value="ctx.setVariable('CONTADOR', '0')" />
+			</properties>
+			<components>
+			</components>
+		</component>
+		<component>
+			<type>WhileComponent</type>
+			<description>Repeat while CONTADOR less than 10</description>
+			<properties>
+				<property name="EXPRESSION"
+					value="parseInt(ctx.getVariable('CONTADOR')) &lt; 10" />
+			</properties>
+			<components>
+				<component>
+					<type>HttpRequest</type>
+					<description>Get Cliente</description>
+					<properties>
+						<property name="URL" value="http://localhost:8888/clientes/1" />
+						<property name="METHOD" value="GET" />
+					</properties>
+					<components>
+						<component>
+							<type>JSONSelector</type>
+							<description>Select apellido</description>
+							<properties>
+								<property name="PATH" value="apellido" />
+							</properties>
+							<components>
+								<component>
+									<type>Logger</type>
+									<description>Show apellido</description>
+									<properties>
+									</properties>
+									<components>
+									</components>
+								</component>
+							</components>
+						</component>
+						<component>
+							<type>JSONSelector</type>
+							<description>Select nombre</description>
+							<properties>
+								<property name="PATH" value="nombre" />
+							</properties>
+							<components>
+								<component>
+									<type>ExpressionAssert</type>
+									<description>Eval if nombre = 'Pedro'</description>
+									<properties>
+										<property name="EXPRESSION" value="input == '${NOMBRE_TEST}'" />
+									</properties>
+									<components>
+										<component>
+											<type>Logger</type>
+											<description>Show Result</description>
+											<properties>
+											</properties>
+											<components>
+											</components>
+										</component>
+									</components>
+								</component>
+								<component>
+									<type>StoreComponent</type>
+									<description>Store value on NOMBRE variable</description>
+									<properties>
+										<property name="VARIABLE_NAME" value="NOMBRE_GUARDADO"></property>
+									</properties>
+									<components>
+									</components>
+								</component>
+							</components>
+						</component>
+					</components>
+				</component>
+				<component>
+					<type>ScriptComponent</type>
+					<description>Increment CONTADOR</description>
+					<properties>
+						<property name="EXPRESSION"
+							value="ctx.setVariable('CONTADOR', (parseInt(ctx.getVariable('CONTADOR')) + 1).toString())" />
+					</properties>
+					<components>
+					</components>
+				</component>
+			</components>
 		</component>
 	</components>
 </project>

@@ -11,7 +11,6 @@ public class LoggerComponent extends BaseComponent {
 
 	@Override
 	public String task(String data) {
-		
 		System.out.println(">>>>>>>>" + data);
 		return data;
 	}

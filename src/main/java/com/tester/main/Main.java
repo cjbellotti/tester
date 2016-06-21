@@ -13,14 +13,21 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import javax.script.Bindings;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.json.JSONObject;
+
 import com.tester.components.HttpRequestComponent;
 import com.tester.components.LoggerComponent;
 import com.tester.context.TestContext;
+import com.tester.exception.ComponentException;
 import com.tester.xml.Component;
 import com.tester.xml.Project;
 import com.tester.xml.Property;
@@ -76,7 +83,14 @@ public class Main {
 		//new Main().doTask();
 	
 		TestContext ctx = new TestContext("project.xml");
-		ctx.process();
+		try {
+			ctx.process();
+		} catch (ComponentException e) {
+			System.out.println(e.getMessage());
+		}
+		System.out.println("NOMBRE_GUARDADO: " + ctx.getVariable("NOMBRE_GUARDADO"));
+		//String nombre = obj.getString("apellido.segundo");
+		//System.out.println(nombre);
 	}
 	
 	public void doTask() {

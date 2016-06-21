@@ -14,6 +14,7 @@ public class Project {
 	private String name;
 	private String description;
 	private List<Component> components;
+	private List<Property> properties; 
 	
 	public Project() {
 		super();
@@ -50,6 +51,16 @@ public class Project {
 	@XmlElement (name = "component")
 	public void setComponents(List<Component> components) {
 		this.components = components;
+	}
+
+	public List<Property> getProperties() {
+		return properties;
+	}
+
+	@XmlElementWrapper (name = "properties")
+	@XmlElement (name = "property")
+	public void setProperties(List<Property> properties) {
+		this.properties = properties;
 	}
 
 

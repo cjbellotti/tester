@@ -18,6 +18,7 @@ import com.tester.base.IComponent;
 import com.tester.base.IContext;
 import com.tester.components.HttpRequestComponent;
 import com.tester.context.TestContext;
+import com.tester.exception.ComponentException;
 
 public class HttpRequestComponentTestSuccessful {
 
@@ -73,7 +74,13 @@ public class HttpRequestComponentTestSuccessful {
 	@Test
 	public void testGetRequest() {
 		
-		String result = component.process(null);
+		String result = "";
+		try {
+			result = component.process(null);
+		} catch (ComponentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertEquals("<response><data>1234</data></response>", result);
 		
 	}

@@ -7,6 +7,7 @@ import java.util.Properties;
 
 import com.tester.base.IComponent;
 import com.tester.base.IContext;
+import com.tester.exception.ComponentException;
 
 public abstract class BaseComponent implements IComponent {
 
@@ -43,7 +44,7 @@ public abstract class BaseComponent implements IComponent {
 	}
 
 	@Override
-	public String process(String data) {
+	public String process(String data) throws ComponentException {
 		
 		String result = this.task(data);
 		
@@ -57,7 +58,7 @@ public abstract class BaseComponent implements IComponent {
 
 	}
 	
-	public abstract String task(String data);
+	public abstract String task(String data) throws ComponentException;
 
 	public IContext getCtx() {
 		return ctx;
