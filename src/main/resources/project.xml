@@ -9,7 +9,7 @@
 			<type>HttpRequest</type>
 			<description>Test clientes Rest Get</description>
 			<properties>
-				<property name="URL" value="http://localhost:8888/clientes" />
+				<property name="URL" value="http://localhost:3000/clientes" />
 				<property name="METHOD" value="POST" />
 				<property name="__HEADER_Content-Type" value="application/json" />
 				<property name="BODY"
@@ -28,7 +28,7 @@
 					<type>HttpRequest</type>
 					<description>Get Cliente</description>
 					<properties>
-						<property name="URL" value="http://localhost:8888/clientes/1" />
+						<property name="URL" value="http://localhost:3000/clientes/1" />
 						<property name="METHOD" value="GET" />
 					</properties>
 					<components>
@@ -100,7 +100,7 @@
 					<type>HttpRequest</type>
 					<description>Get Cliente</description>
 					<properties>
-						<property name="URL" value="http://localhost:8888/clientes/1" />
+						<property name="URL" value="http://localhost:3000/clientes/1" />
 						<property name="METHOD" value="GET" />
 					</properties>
 					<components>
@@ -166,6 +166,54 @@
 							value="ctx.setVariable('CONTADOR', (parseInt(ctx.getVariable('CONTADOR')) + 1).toString())" />
 					</properties>
 					<components>
+					</components>
+				</component>
+			</components>
+		</component>
+		<component>
+			<type>JDBCComponent</type>
+			<description>Test Tabla Prueba</description>
+			<properties>
+				<property name="DRIVER" value="com.mysql.jdbc.Driver" />
+				<property name="HOST" value="jdbc:mysql://localhost:3306/" />
+				<property name="DB_NAME" value="pruebas" />
+				<property name="USERNAME" value="javier" />
+				<property name="PASSWORD" value="12345678" />
+				<property name="QUERY" value="select * from prueba where id = 1" />
+			</properties>
+			<components>
+				<component>
+					<type>Logger</type>
+					<description>Show Result</description>
+					<properties>
+					</properties>
+					<components>
+					</components>
+				</component>
+				<component>
+					<type>XPathSelector</type>
+					<description>Get Xpath Apellido</description>
+					<properties>
+						<property name="PATH" value="/ResultSet/Row/APELLIDO" />
+					</properties>
+					<components>
+						<component>
+							<type>Logger</type>
+							<description>Show Result</description>
+							<properties>
+							</properties>
+							<components>
+							</components>
+						</component>
+						<component>
+							<type>StoreComponent</type>
+							<description>Store value on NOMBRE variable</description>
+							<properties>
+								<property name="VARIABLE_NAME" value="NOMBRE_GUARDADO"></property>
+							</properties>
+							<components>
+							</components>
+						</component>
 					</components>
 				</component>
 			</components>
