@@ -3,6 +3,7 @@
 	<name>Test</name>
 	<properties>
 		<property name="NOMBRE_TEST" value="Pedro" />
+		<property name="DATO" value="*******XXXXXXX*****"/>
 	</properties>
 	<components>
 		<component>
@@ -170,7 +171,7 @@
 				</component>
 			</components>
 		</component>
-		<component>
+		<!--<component>
 			<type>JDBCComponent</type>
 			<description>Test Tabla Prueba</description>
 			<properties>
@@ -214,6 +215,58 @@
 							<components>
 							</components>
 						</component>
+					</components>
+				</component>
+			</components>
+		</component>-->
+		<component>
+			<type>TemplateComponent</type>
+			<description>Test Template Component</description>
+			<properties>
+				<property name="TEMPLATE"
+					value="[[[[[[[[{{ NOMBRE_GUARDADO }}]]]]]" />
+			</properties>
+			<components>
+				<component>
+					<type>Logger</type>
+					<description>Show Result</description>
+					<properties>
+					</properties>
+					<components>
+					</components>
+				</component>
+			</components>
+		</component>
+		<component>
+			<type>TemplateComponent</type>
+			<description>Test Template Component</description>
+			<properties>
+				<property name="TEMPLATE"
+					value="[[[[[[[[{{ CONTADOR }}]]]]]" />
+			</properties>
+			<components>
+				<component>
+					<type>Logger</type>
+					<description>Show Result</description>
+					<properties>
+					</properties>
+					<components>
+					</components>
+				</component>
+			</components>
+		</component>
+		<component>
+			<type>RunProjectComponent</type>
+			<properties>
+				<property name="PROJECT_FILE" value="custom-project.xml"/>
+			</properties>
+			<components>
+				<component>
+					<type>Logger</type>
+					<description>Show Result</description>
+					<properties>
+					</properties>
+					<components>
 					</components>
 				</component>
 			</components>

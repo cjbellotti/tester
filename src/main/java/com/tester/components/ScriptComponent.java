@@ -24,7 +24,10 @@ public class ScriptComponent extends BaseComponent {
 			
 			String expresion = this.getCtx().processData(this.getProperties().getProperty("EXPRESSION"));
 			engine.put("input", data);
+			engine.put("ctx", this.getCtx());
+			engine.put("output", "");
 			engine.eval(expresion);
+			result = (String) engine.get("output");
 			
 		} catch (ScriptException e) {
 			

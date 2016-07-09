@@ -84,7 +84,7 @@ public class Main {
 	
 		TestContext ctx = new TestContext("project.xml");
 		try {
-			ctx.process();
+			System.out.println(ctx.process("Hola Mundo!!!"));
 		} catch (ComponentException e) {
 			System.out.println(e.getMessage());
 		}

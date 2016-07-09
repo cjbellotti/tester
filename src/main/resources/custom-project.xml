@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<project>
+	<name>Test</name>
+	<properties>
+	</properties>
+	<components>
+		<component>
+			<type>ScriptComponent</type>
+			<description>Modify 1</description>
+			<properties>
+				<property name="EXPRESSION" value="output = input + 'AAA'" />
+			</properties>
+			<components>
+				<component>
+					<type>ScriptComponent</type>
+					<description>Modify 2</description>
+					<properties>
+						<property name="EXPRESSION" value="output = input + 'BBB'" />
+					</properties>
+					<components>
+						<component>
+							<type>ScriptComponent</type>
+							<description>Modify 3</description>
+							<properties>
+								<property name="EXPRESSION" value="output = input + ctx.getVariable('DATO')" />
+							</properties>
+							<components>
+								<component>
+									<type>StoreComponent</type>
+									<properties>
+										<property name="VARIABLE_NAME" value="RETURN"/>
+									</properties>
+									<component>
+									</component>
+								</component>
+							</components>
+						</component>
+					</components>
+				</component>
+				<component>
+					<type>ReturnComponent</type>
+					<properties>
+						<property name="VARIABLE_NAME" value="RETURN"/>
+					</properties>
+					<components>
+					</components>
+				</component>
+			</components>
+		</component>
+	</components>
+</project>

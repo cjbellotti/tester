@@ -159,6 +159,12 @@ public class TestContext implements IContext {
 	}
 
 	@Override
+	public String process(String data) throws ComponentException {
+		this.components.process(data);
+		return this.getVariable("__RETURN");
+	}
+
+	@Override
 	public String processData(String data) {
 
 		List<String> variables = this.getVariablesList(data);
@@ -209,4 +215,14 @@ public class TestContext implements IContext {
 		return this.components;
 	}
 
+	@Override
+	public Properties getVariables() {
+		return this.variables;
+	}
+
+	@Override
+	public void setVariables(Properties variables) {
+		this.variables = variables;
+	}
+	
 }

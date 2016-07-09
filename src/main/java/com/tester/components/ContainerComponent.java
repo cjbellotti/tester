@@ -10,7 +10,7 @@ public class ContainerComponent extends BaseComponent {
 
 	@Override
 	public String task(String data) {
-		return null;
+		return data;
 	}
 
 	@Override
